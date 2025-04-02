@@ -6,6 +6,7 @@ namespace KzmTodoApp\Infrastructure\Eloquents;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use KzmTodoApp\Domain\Worker\Worker;
 
 /**
  * 作業者Eloquentモデル
@@ -39,5 +40,13 @@ class EloquentWorker extends Model
     public function uniqueIds(): array
     {
         return ['worker_id'];
+    }
+
+    public function toDomain(): Worker
+    {
+        return new Worker(
+            $this->worker_id,
+            $this->sub,
+        );
     }
 }
