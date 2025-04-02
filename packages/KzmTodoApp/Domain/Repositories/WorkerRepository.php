@@ -8,7 +8,7 @@ use KzmTodoApp\Domain\Worker\Worker;
 
 interface WorkerRepository
 {
-    public function getWorker(): Worker;
+    public function getWorker(string $sub): Worker;
 
-    public function saveWorker(): Worker;
+    public function registerWorker(string $sub): Worker;
 }
