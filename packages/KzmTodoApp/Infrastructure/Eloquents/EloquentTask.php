@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace KzmTodoApp\Infrastructure\Eloquents;
 
+use Database\Factories\EloquentTaskFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -31,9 +33,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EloquentTask extends Model
 {
-    use HasUlids;
+    use HasUlids, HasFactory;
 
     protected $table = 'tasks';
+
+    /**
+     * モデルの新しいファクトリインスタンスの生成
+     */
+    protected static function newFactory()
+    {
+        return EloquentTaskFactory::new();
+    }
 
     /**
      * 一意の識別子を受け取るカラムの取得

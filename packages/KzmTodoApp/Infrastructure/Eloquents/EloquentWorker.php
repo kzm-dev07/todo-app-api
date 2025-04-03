@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace KzmTodoApp\Infrastructure\Eloquents;
 
+use Database\Factories\EloquentWorkerFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use KzmTodoApp\Domain\Worker\Worker;
 
@@ -28,9 +30,21 @@ use KzmTodoApp\Domain\Worker\Worker;
  */
 class EloquentWorker extends Model
 {
-    use HasUlids;
+    use HasUlids, HasFactory;
 
     protected $table = 'workers';
+
+    protected $fillable = [
+        'sub',
+    ];
+
+    /**
+     * モデルの新しいファクトリインスタンスの生成
+     */
+    protected static function newFactory()
+    {
+        return EloquentWorkerFactory::new();
+    }
 
     /**
      * 一意の識別子を受け取るカラムの取得
