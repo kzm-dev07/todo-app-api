@@ -6,6 +6,7 @@ namespace KzmTodoApp\Infrastructure\Repositories;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use KzmTodoApp\Domain\Exceptions\NotFoundException;
 use KzmTodoApp\Domain\Repositories\WorkerRepository;
 use KzmTodoApp\Domain\Worker\Worker;
 use KzmTodoApp\Infrastructure\Eloquents\EloquentWorker;
@@ -17,7 +18,7 @@ class EloquentWorkerRepository implements WorkerRepository
         $eloquentWorker =  EloquentWorker::whereSub($sub)->first();
 
         if ($eloquentWorker === null) {
-            throw new Exception('Worker is not Found.');
+            throw new NotFoundException('Worker is not Found.');
         }
 
         return $eloquentWorker->toDomain();
@@ -27,7 +28,12 @@ class EloquentWorkerRepository implements WorkerRepository
     {
         try {
             DB::beginTransaction();
-            $eloquentWorker = EloquentWorker::whereSub($sub)->firstOrNew(['sub' => $sub]);
+            $eloquentWorker = EloquentWorker::whereSub($sub)->first();
+            if (!$eloquentWorker) {
+                $eloquentWorker = new EloquentWorker();
+            }
+            $eloquentWorker->sub = $sub;
+            $eloquentWorker->save();
             DB::commit();
             return $eloquentWorker->toDomain();
         } catch (Exception $e) {
