@@ -34,10 +34,6 @@ class EloquentWorker extends Model
 
     protected $table = 'workers';
 
-    protected $fillable = [
-        'sub',
-    ];
-
     /**
      * モデルの新しいファクトリインスタンスの生成
      */
