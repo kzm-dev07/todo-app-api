@@ -7,6 +7,7 @@ namespace KzmTodoApp\Infrastructure\Eloquents;
 use Database\Factories\EloquentTaskFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use KzmTodoApp\Domain\Task\Task;
 
 /**
  * タスクEloquentモデル
@@ -45,13 +46,11 @@ class EloquentTask extends Model
         return EloquentTaskFactory::new();
     }
 
-    /**
-     * 一意の識別子を受け取るカラムの取得
-     *
-     * @return array<int, string>
-     */
-    public function uniqueIds(): array
+    public function fromDomain(Task $task): void
     {
-        return ['task_id'];
+        $this->key = $task->getKey();
+        $this->worker_key = $task->getWorkerKey();
+        $this->title = $task->getTitle();
+        $this->isDone = $task->isDone();
     }
 }
