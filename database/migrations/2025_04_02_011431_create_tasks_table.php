@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->comment('タスク');
             $table->id();
-            $table->ulid('task_id')->unique()->comment('タスクID');
-            $table->ulid('worker_id')->comment('作業者ID');
-            $table->string('title', 255)->comment('やること');;
+            $table->ulid('key')->unique()->comment('タスクキー');
+            $table->ulid('worker_key')->comment('作業者キー');
+            $table->string('title', 255)->comment('タイトル');;
             $table->boolean('isDone')->default(false)->comment('達成済みフラグ');;
             $table->timestamps();
 
-            $table->foreign(['worker_id'], 'fk_workers')
-                ->references(['worker_id'])
+            $table->foreign(['worker_key'], 'fk_workers')
+                ->references(['key'])
                 ->on('workers')
                 ->onDelete('CASCADE');
         });

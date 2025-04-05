@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace KzmTodoApp\Infrastructure\Eloquents;
 
 use Database\Factories\EloquentTaskFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,27 +12,28 @@ use Illuminate\Database\Eloquent\Model;
  * タスクEloquentモデル
  *
  * @property int $id
- * @property string $task_id タスクID
- * @property string $worker_id 作業者ID
- * @property string $title やること
+ * @property string $key タスクキー
+ * @property string $worker_key 作業者キー
+ * @property string $title タイトル
  * @property int $isDone 達成済みフラグ
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\EloquentTaskFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereIsDone($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereTaskId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereKey($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereWorkerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EloquentTask whereWorkerKey($value)
  * @mixin \Eloquent
  */
 class EloquentTask extends Model
 {
-    use HasUlids, HasFactory;
+    use HasFactory;
 
     protected $table = 'tasks';
 
