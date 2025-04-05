@@ -24,16 +24,16 @@ class EloquentWorkerRepository implements WorkerRepository
         return $eloquentWorker->toDomain();
     }
 
-    public function registerWorker(string $sub): Worker
+    public function registerWorker(Worker $worker): Worker
     {
+        $eloquentWorker = EloquentWorker::whereSub($worker->getSub())->first();
         try {
             DB::beginTransaction();
-            $eloquentWorker = EloquentWorker::whereSub($sub)->first();
+            $eloquentWorker = EloquentWorker::whereSub($worker->getSub())->first();
             if (!$eloquentWorker) {
-                $eloquentWorker = new EloquentWorker();
+                $eloquentWorker = EloquentWorker::fromDomain($worker);
+                $eloquentWorker->save();
             }
-            $eloquentWorker->sub = $sub;
-            $eloquentWorker->save();
             DB::commit();
             return $eloquentWorker->toDomain();
         } catch (Exception $e) {

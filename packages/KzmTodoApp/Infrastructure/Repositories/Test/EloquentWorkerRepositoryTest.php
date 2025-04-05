@@ -11,6 +11,7 @@ use KzmTodoApp\Infrastructure\Repositories\EloquentWorkerRepository;
 use PHPUnit\Framework\Attributes\Test;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
 class EloquentWorkerRepositoryTest extends TestCase
 {
@@ -21,11 +22,13 @@ class EloquentWorkerRepositoryTest extends TestCase
     {
         setup:
         $sub = Uuid::uuid4()->toString();
+        $key = Str::ulid()->toString();
         $eloquentWorker = EloquentWorker::factory()->create([
-            'sub' => $sub
+            'key' => $key,
+            'sub' => $sub,
         ]);
 
-        $expect = new Worker($eloquentWorker->worker_id, $sub);
+        $expect = new Worker($key, $sub);
 
         when:
         $eloquentWorkerRepository = $this->createInstance();
@@ -47,7 +50,7 @@ class EloquentWorkerRepositoryTest extends TestCase
 
         then:
         $eloquentWorkerRepository = $this->createInstance();
-        $actual = $eloquentWorkerRepository->getWorker($sub);
+        $eloquentWorkerRepository->getWorker($sub);
     }
 
     #[Test]
@@ -55,12 +58,13 @@ class EloquentWorkerRepositoryTest extends TestCase
     {
         setup:
         $sub = Uuid::uuid4()->toString();
+        $key = Str::ulid()->toString();
 
-        $expect = new Worker(Uuid::uuid4()->toString(), $sub);
+        $expect = new Worker($key, $sub);
 
         when:
         $eloquentWorkerRepository = $this->createInstance();
-        $actual = $eloquentWorkerRepository->registerWorker($sub);
+        $actual = $eloquentWorkerRepository->registerWorker($expect);
 
         then:
         $this->assertEquals($expect->getSub(), $actual->getSub());

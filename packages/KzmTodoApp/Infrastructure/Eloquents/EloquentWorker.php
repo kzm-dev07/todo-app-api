@@ -45,8 +45,17 @@ class EloquentWorker extends Model
     public function toDomain(): Worker
     {
         return new Worker(
-            $this->worker_id,
+            $this->key,
             $this->sub,
         );
+    }
+
+    public static function fromDomain(Worker $worker): self
+    {
+        $eloquent = new self();
+        $eloquent->key = $worker->getKey();
+        $eloquent->sub = $worker->getSub();
+
+        return $eloquent;
     }
 }

@@ -10,5 +10,5 @@ interface WorkerRepository
 {
     public function getWorker(string $sub): Worker;
 
-    public function registerWorker(string $sub): Worker;
+    public function registerWorker(Worker $worker): Worker;
 }

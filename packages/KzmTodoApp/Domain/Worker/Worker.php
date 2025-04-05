@@ -7,16 +7,16 @@ namespace KzmTodoApp\Domain\Worker;
 class Worker
 {
     public function __construct(
-        private readonly string $workerId,
+        private readonly string $key,
         private readonly string $sub,
     ) {}
 
     /**
-     * Get the value of workerId
+     * Get the value of key
      */
-    public function getWorkerId()
+    public function getKey()
     {
-        return $this->workerId;
+        return $this->key;
     }
 
     /**
