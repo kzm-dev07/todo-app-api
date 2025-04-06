@@ -8,5 +8,11 @@ use KzmTodoApp\Domain\Task\Task;
 
 interface TaskRepository
 {
+    /**
+     * タスクを保存する
+     *
+     * @param Task $task
+     * @return void
+     */
     public function save(Task $task): void;
 }
