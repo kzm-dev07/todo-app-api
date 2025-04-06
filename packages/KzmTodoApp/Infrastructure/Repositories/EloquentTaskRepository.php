@@ -12,6 +12,9 @@ use KzmTodoApp\Infrastructure\Eloquents\EloquentTask;
 
 class EloquentTaskRepository implements TaskRepository
 {
+    /**
+     * @inheritDoc
+     */
     public function save(Task $task): void
     {
         $eloquentTask = EloquentTask::whereKey($task->getKey()->toString())->firstOrNew();
