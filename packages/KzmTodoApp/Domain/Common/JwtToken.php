@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use KzmTodoApp\Domain\Repositories\OidcProviderRepository;
 use stdClass;
 
+/**
+ * @phpstan-type JwtToken object{sub: string}&\stdClass
+ */
 class JwtToken
 {
     private static self|null $instance = null;
@@ -27,6 +30,9 @@ class JwtToken
         $this->jwks = JWK::parseKeySet(json_decode($jwksJson, true));
     }
 
+    /**
+     * @return JwtToken
+     */
     public function decode(): stdClass
     {
         try {
