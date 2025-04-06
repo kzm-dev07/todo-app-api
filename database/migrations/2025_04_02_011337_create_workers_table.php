@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('workers', function (Blueprint $table) {
             $table->comment('作業者');
             $table->id();
-            $table->ulid('worker_id')->unique()->comment('作業者ID');
+            $table->ulid('key')->unique()->comment('作業者キー');
             $table->uuid('sub')->unique()->comment('subject');
             $table->timestamps();
         });

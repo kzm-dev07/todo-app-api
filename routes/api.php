@@ -1,11 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use KzmTodoApp\Application\Controllers\HelloController;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use KzmTodoApp\Application\Controllers\TaskController;
 
 Route::get('/hello', [HelloController::class, 'index']);
+
+Route::post('/task', [TaskController::class, 'create']);
