@@ -7,6 +7,7 @@ namespace KzmTodoApp\Infrastructure\Eloquents;
 use Database\Factories\EloquentWorkerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use KzmTodoApp\Domain\Common\Key;
 use KzmTodoApp\Domain\Worker\Worker;
 
 /**
@@ -45,7 +46,7 @@ class EloquentWorker extends Model
     public function toDomain(): Worker
     {
         return new Worker(
-            $this->key,
+            new Key($this->key),
             $this->sub,
         );
     }
@@ -53,7 +54,7 @@ class EloquentWorker extends Model
     public static function fromDomain(Worker $worker): self
     {
         $eloquent = new self();
-        $eloquent->key = $worker->getKey();
+        $eloquent->key = $worker->getKey()->toString();
         $eloquent->sub = $worker->getSub();
 
         return $eloquent;

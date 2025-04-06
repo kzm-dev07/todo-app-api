@@ -14,7 +14,7 @@ class EloquentTaskRepository implements TaskRepository
 {
     public function save(Task $task): void
     {
-        $eloquentTask = EloquentTask::whereKey($task->getKey())->firstOrNew();
+        $eloquentTask = EloquentTask::whereKey($task->getKey()->toString())->firstOrNew();
         $eloquentTask->fromDomain($task);
         try {
             DB::beginTransaction();

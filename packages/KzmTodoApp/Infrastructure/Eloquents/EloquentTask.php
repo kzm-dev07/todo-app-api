@@ -48,8 +48,8 @@ class EloquentTask extends Model
 
     public function fromDomain(Task $task): void
     {
-        $this->key = $task->getKey();
-        $this->worker_key = $task->getWorkerKey();
+        $this->key = $task->getKey()->toString();
+        $this->worker_key = $task->getWorkerKey()->toString();
         $this->title = $task->getTitle();
         $this->isDone = $task->isDone();
     }

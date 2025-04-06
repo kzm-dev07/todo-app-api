@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace KzmTodoApp\Domain\Task;
 
+use KzmTodoApp\Domain\Common\Key;
+
 class Task
 {
     public function __construct(
-        private readonly string $key,
-        private readonly string $workerKey,
+        private readonly Key $key,
+        private readonly Key $workerKey,
         private readonly string $title,
         private readonly bool $isDone,
     ) {}

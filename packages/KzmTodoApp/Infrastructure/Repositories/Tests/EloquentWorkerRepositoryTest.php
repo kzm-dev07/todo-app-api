@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KzmTodoApp\Infrastructure\Repositories\Test;
+namespace KzmTodoApp\Infrastructure\Repositories\Tests;
 
 use KzmTodoApp\Domain\Exceptions\NotFoundException;
 use KzmTodoApp\Domain\Worker\Worker;
@@ -11,7 +11,7 @@ use KzmTodoApp\Infrastructure\Repositories\EloquentWorkerRepository;
 use PHPUnit\Framework\Attributes\Test;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
-use Illuminate\Support\Str;
+use KzmTodoApp\Domain\Common\Key;
 
 class EloquentWorkerRepositoryTest extends TestCase
 {
@@ -22,9 +22,9 @@ class EloquentWorkerRepositoryTest extends TestCase
     {
         setup:
         $sub = Uuid::uuid4()->toString();
-        $key = Str::ulid()->toString();
-        $eloquentWorker = EloquentWorker::factory()->create([
-            'key' => $key,
+        $key = Key::generate();
+        EloquentWorker::factory()->create([
+            'key' => $key->toString(),
             'sub' => $sub,
         ]);
 
@@ -58,7 +58,7 @@ class EloquentWorkerRepositoryTest extends TestCase
     {
         setup:
         $sub = Uuid::uuid4()->toString();
-        $key = Str::ulid()->toString();
+        $key = Key::generate();
 
         $expect = new Worker($key, $sub);
 
