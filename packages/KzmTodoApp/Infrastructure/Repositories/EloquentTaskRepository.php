@@ -7,6 +7,7 @@ namespace KzmTodoApp\Infrastructure\Repositories;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use KzmTodoApp\Domain\Exceptions\NoContentsException;
 use KzmTodoApp\Domain\Repositories\TaskRepository;
 use KzmTodoApp\Domain\Task\Task;
 use KzmTodoApp\Domain\Worker\Worker;
@@ -18,12 +19,12 @@ class EloquentTaskRepository implements TaskRepository
     /**
      * @inheritDoc
      */
-    public function getTasks(Worker $worker): ?Collection
+    public function getTasks(Worker $worker): Collection
     {
         $eloquentTasks = EloquentTask::whereWorkerKey($worker->getKey()->toString())->get();
 
         if ($eloquentTasks->count() === 0) {
-            return null;
+            throw new NoContentsException('No task exist.');
         }
 
         return $eloquentTasks->map(fn(EloquentTask $eloquentTask) => $eloquentTask->toDomain());

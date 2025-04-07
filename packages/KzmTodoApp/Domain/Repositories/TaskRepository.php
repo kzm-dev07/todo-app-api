@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KzmTodoApp\Domain\Repositories;
 
 use Illuminate\Support\Collection;
+use KzmTodoApp\Domain\Exceptions\NoContentsException;
 use KzmTodoApp\Domain\Task\Task;
 use KzmTodoApp\Domain\Worker\Worker;
 
@@ -14,9 +15,10 @@ interface TaskRepository
      * タスク一覧を取得する
      *
      * @param Worker $worker
-     * @return Collection<Task>|null
+     * @return Collection<Task>
+     * @throws NoContentsException
      */
-    public function getTasks(Worker $worker): ?Collection;
+    public function getTasks(Worker $worker): Collection;
     /**
      * タスクを保存する
      *
