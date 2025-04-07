@@ -6,4 +6,6 @@ use KzmTodoApp\Application\Controllers\TaskController;
 
 Route::get('/hello', [HelloController::class, 'index']);
 
+Route::get('/tasks', [TaskController::class, 'index']);
+
 Route::post('/task', [TaskController::class, 'create']);
