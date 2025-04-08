@@ -20,7 +20,7 @@ class JwtToken
     private string $token;
     private array $jwks;
 
-    private function __construct(
+    public function __construct(
         Request $request,
         OidcProviderRepository $oidcProviderRepository
     ) {
