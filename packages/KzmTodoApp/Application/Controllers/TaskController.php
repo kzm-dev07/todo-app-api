@@ -10,6 +10,7 @@ use KzmTodoApp\Application\Responses\TasksResponse;
 use KzmTodoApp\Application\UseCases\CreateTask;
 use KzmTodoApp\Application\UseCases\DeleteTask;
 use KzmTodoApp\Application\UseCases\GetTasks;
+use KzmTodoApp\Application\UseCases\UpdateTask;
 use KzmTodoApp\Domain\Common\Key;
 
 class TaskController extends Controller
@@ -29,6 +30,12 @@ class TaskController extends Controller
     public function delete(Request $request, DeleteTask $useCase)
     {
         $useCase(new Key($request->key));
+
+        return response()->json([], Response::HTTP_OK, []);
+    }
+    public function update(Request $request, UpdateTask $useCase)
+    {
+        $useCase(new Key($request->key), $request->title, $request->isDone);
 
         return response()->json([], Response::HTTP_OK, []);
     }
