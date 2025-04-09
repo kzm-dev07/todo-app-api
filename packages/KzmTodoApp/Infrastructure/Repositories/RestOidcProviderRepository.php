@@ -14,7 +14,7 @@ class RestOidcProviderRepository implements OidcProviderRepository
 
     public function __construct()
     {
-        $this->jwksUrl = env('KEYCLOAK_JWKS_URL', '');
+        $this->jwksUrl = config('oidc.jwks_url');
     }
     public function getJwks(): string
     {
