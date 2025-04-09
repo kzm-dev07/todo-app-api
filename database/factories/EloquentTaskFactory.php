@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use KzmTodoApp\Domain\Common\Key;
 use KzmTodoApp\Infrastructure\Eloquents\EloquentTask;
 
 /**
@@ -26,7 +27,10 @@ class EloquentTaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'key' => Key::generate()->toString(),
+            'worker_key' => Key::generate()->toString(),
+            'title' => '筋トレ',
+            'isDone' => false,
         ];
     }
 }
