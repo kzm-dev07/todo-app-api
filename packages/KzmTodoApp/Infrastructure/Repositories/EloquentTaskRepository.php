@@ -24,10 +24,6 @@ class EloquentTaskRepository implements TaskRepository
     {
         $eloquentTasks = EloquentTask::whereWorkerKey($worker->getKey()->toString())->get();
 
-        if ($eloquentTasks->count() === 0) {
-            throw new NoContentsException('No task exist.');
-        }
-
         return $eloquentTasks->map(fn(EloquentTask $eloquentTask) => $eloquentTask->toDomain());
     }
 

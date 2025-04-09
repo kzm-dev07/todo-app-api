@@ -17,7 +17,6 @@ interface TaskRepository
      *
      * @param Worker $worker
      * @return Collection<Task>
-     * @throws NoContentsException
      */
     public function getTasks(Worker $worker): Collection;
 
