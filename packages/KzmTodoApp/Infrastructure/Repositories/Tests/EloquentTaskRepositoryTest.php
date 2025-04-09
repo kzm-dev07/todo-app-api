@@ -53,7 +53,7 @@ class EloquentTaskRepositoryTest extends TestCase
     }
 
     #[Test]
-    public function save()
+    public function test_save()
     {
         setup:
         $sub = Uuid::uuid4()->toString();
@@ -76,6 +76,57 @@ class EloquentTaskRepositoryTest extends TestCase
             'title' => $task->getTitle(),
             'isDone' => $task->isDone(),
         ]);
+    }
+
+
+    #[Test]
+    public function test_delete()
+    {
+        setup:
+        $sub = Uuid::uuid4()->toString();
+        $workerKey = Key::generate();
+        EloquentWorker::factory()->create([
+            'key' => $workerKey->toString(),
+            'sub' => $sub,
+        ]);
+        $worker = new Worker($workerKey, $sub);
+
+        $eloquentTask = EloquentTask::factory()->create(['worker_key' => $workerKey->toString()]);
+        $key = new Key($eloquentTask->key);
+
+        when:
+        $eloquentTaskRepository = $this->createInstance();
+        $actual = $eloquentTaskRepository->delete($key);
+
+        then:
+        $this->assertDatabaseMissing('tasks', ['key' => $key->toString()]);
+    }
+
+    #[Test]
+    public function test_getTask()
+    {
+        setup:
+        $sub = Uuid::uuid4()->toString();
+        $workerKey = Key::generate();
+        EloquentWorker::factory()->create([
+            'key' => $workerKey->toString(),
+            'sub' => $sub,
+        ]);
+
+        $taskKey = Key::generate();
+        $eloquentTask = EloquentTask::factory()->create([
+            'key' => $taskKey->toString(),
+            'worker_key' => $workerKey->toString(),
+        ]);
+
+        $expect = $eloquentTask->toDomain();
+
+        when:
+        $eloquentTaskRepository = $this->createInstance();
+        $actual = $eloquentTaskRepository->getTask($taskKey);
+
+        then:
+        $this->assertEquals($expect, $actual);
     }
 
     private function createInstance(): EloquentTaskRepository
