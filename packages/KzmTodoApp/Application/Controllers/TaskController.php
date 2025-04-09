@@ -22,17 +22,20 @@ class TaskController extends Controller
 
         return response()->json($response, Response::HTTP_OK, []);
     }
+
     public function create(Request $request, CreateTask $useCase)
     {
         $useCase($request->title, $request->isDone ?? false);
         return response()->json([], Response::HTTP_OK, []);
     }
+
     public function delete(Request $request, DeleteTask $useCase)
     {
         $useCase(new Key($request->key));
 
         return response()->json([], Response::HTTP_OK, []);
     }
+
     public function update(Request $request, UpdateTask $useCase)
     {
         $useCase(new Key($request->key), $request->title, $request->isDone);
