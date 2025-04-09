@@ -20,6 +20,15 @@ interface TaskRepository
      * @throws NoContentsException
      */
     public function getTasks(Worker $worker): Collection;
+
+    /**
+     * タスクを取得する
+     *
+     * @param Key $key
+     * @return Task|null
+     * @throws NoContentsException
+     */
+    public function getTask(Key $key): ?Task;
     /**
      * タスクを保存する
      *

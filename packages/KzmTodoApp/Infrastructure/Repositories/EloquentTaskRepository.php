@@ -34,6 +34,16 @@ class EloquentTaskRepository implements TaskRepository
     /**
      * @inheritDoc
      */
+    public function getTask(Key $key): ?Task
+    {
+        $eloquentTask = EloquentTask::where('key', $key->toString())->first();
+
+        return $eloquentTask !== null ? $eloquentTask->toDomain() : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function save(Task $task): void
     {
         // INFO: whereKeyは既に予約メソッドである。primary keyで検索する模様
