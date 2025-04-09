@@ -35,7 +35,9 @@ class EloquentTaskRepository implements TaskRepository
      */
     public function save(Task $task): void
     {
-        $eloquentTask = EloquentTask::whereKey($task->getKey()->toString())->firstOrNew();
+        // INFO: whereKeyは既に予約メソッドである。primary keyで検索する模様
+        // $eloquentTask = EloquentTask::whereKey($task->getKey()->toString())->firstOrNew();
+        $eloquentTask = EloquentTask::where('key', $task->getKey()->toString())->firstOrNew();
         $eloquentTask->fromDomain($task);
         try {
             DB::beginTransaction();
