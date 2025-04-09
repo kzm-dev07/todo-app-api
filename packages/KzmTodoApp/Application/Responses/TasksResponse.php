@@ -11,7 +11,7 @@ class TasksResponse
 {
     public array $tasks;
 
-    private function __construct(array $tasks): void
+    private function __construct(array $tasks)
     {
         $this->tasks = $tasks;
     }
@@ -21,7 +21,7 @@ class TasksResponse
         $result = $tasks->map(function (Task $task) {
             return [
                 'key' => $task->getKey()->toString(),
-                'getTitle' => $task->getTitle(),
+                'title' => $task->getTitle(),
                 'isDone' => $task->isDone(),
             ];
         })->toArray();
