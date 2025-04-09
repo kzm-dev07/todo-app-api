@@ -21,7 +21,7 @@ class TaskController extends Controller
     }
     public function create(Request $request, CreateTask $useCase)
     {
-        $useCase($request->title, $request->isDone);
+        $useCase($request->title, $request->isDone ?? false);
         return response()->json([], Response::HTTP_OK, []);
     }
 }
