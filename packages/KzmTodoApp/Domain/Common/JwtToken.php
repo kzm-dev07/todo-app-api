@@ -8,6 +8,7 @@ use Exception;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
+use KzmTodoApp\Domain\Exceptions\UnauthorizedException;
 use KzmTodoApp\Domain\Repositories\OidcProviderRepository;
 use stdClass;
 
@@ -39,7 +40,7 @@ class JwtToken
             $decoded = JWT::decode($this->token, $this->jwks);
             return $decoded;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new UnauthorizedException($e->getMessage());
         }
     }
 

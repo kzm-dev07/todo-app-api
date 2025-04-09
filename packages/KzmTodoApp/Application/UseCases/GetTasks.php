@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KzmTodoApp\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use KzmTodoApp\Domain\Exceptions\NoContentsException;
 use KzmTodoApp\Domain\Repositories\TaskRepository;
 use KzmTodoApp\Domain\Repositories\WorkerRepository;
 use KzmTodoApp\Domain\Trait\TokenTrait;
@@ -26,6 +27,12 @@ class GetTasks
 
         $worker = $this->workerRepository->getWorker($this->token()->sub);
 
-        return $this->taskRepository->getTasks($worker);
+        $tasks = $this->taskRepository->getTasks($worker);
+
+        if ($tasks->count() === 0) {
+            throw new NoContentsException('No task exist.');
+        }
+
+        return $tasks;
     }
 }
