@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use KzmTodoApp\Application\Responses\TasksResponse;
 use KzmTodoApp\Application\UseCases\CreateTask;
+use KzmTodoApp\Application\UseCases\DeleteTask;
 use KzmTodoApp\Application\UseCases\GetTasks;
+use KzmTodoApp\Domain\Common\Key;
 
 class TaskController extends Controller
 {
@@ -22,6 +24,12 @@ class TaskController extends Controller
     public function create(Request $request, CreateTask $useCase)
     {
         $useCase($request->title, $request->isDone ?? false);
+        return response()->json([], Response::HTTP_OK, []);
+    }
+    public function delete(Request $request, DeleteTask $useCase)
+    {
+        $useCase(new Key($request->key));
+
         return response()->json([], Response::HTTP_OK, []);
     }
 }
