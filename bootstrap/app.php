@@ -17,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(Logger::class);
-        $middleware->append(TokenMiddleware::class);
+        $middleware->appendToGroup('token', [
+            TokenMiddleware::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Exception $e, Request $request) {

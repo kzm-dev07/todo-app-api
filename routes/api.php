@@ -6,10 +6,12 @@ use KzmTodoApp\Application\Controllers\TaskController;
 
 Route::get('/hello', [HelloController::class, 'index']);
 
-Route::get('/tasks', [TaskController::class, 'index']);
+Route::middleware(['token'])->group(function () {
+    Route::get('/tasks', [TaskController::class, 'index']);
 
-Route::post('/task', [TaskController::class, 'create']);
+    Route::post('/task', [TaskController::class, 'create']);
 
-Route::delete('/task/{key}', [TaskController::class, 'delete']);
+    Route::delete('/task/{key}', [TaskController::class, 'delete']);
 
-Route::put('/task/{key}', [TaskController::class, 'update']);
+    Route::put('/task/{key}', [TaskController::class, 'update']);
+});
